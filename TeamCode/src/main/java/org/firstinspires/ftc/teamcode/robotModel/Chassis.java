@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robotModel;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Chassis {
 
     //MARK: Attributes
+    final double TICKS_PER_INCH = 45.28479;
     private DcMotor leftFront;
     private DcMotor rightFront;
     private DcMotor leftRear;
@@ -32,10 +34,24 @@ public class Chassis {
 
     public void driveStraight(double distance,double power){
         //definitely not finished!!!
+        //get current ticks
+        int ticksSoFar = rightRear.getCurrentPosition();
+        int ticksToGo = (int) (distance*TICKS_PER_INCH);
+        //start motors
         leftFront.setPower(power);
         rightFront.setPower(power);
         leftRear.setPower(power);
         rightRear.setPower(power);
+        //enter a loop that checks for current distance
+        while(ticksToGo>(rightRear.getCurrentPosition()-ticksSoFar)){
+            telemetry.addData("distance travelled",(rightRear.getCurrentPosition()-ticksSoFar)/TICKS_PER_INCH);
+        }
+
+        //stop motors
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+        leftRear.setPower(0);
+        rightRear.setPower(0);
 
     }
 

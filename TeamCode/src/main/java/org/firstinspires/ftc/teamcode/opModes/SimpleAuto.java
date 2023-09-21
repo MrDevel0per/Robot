@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.robotModel.Robot;
 @Autonomous(name="Simple OpMode", group="Linear OpMode")
 //@Disabled
 public class SimpleAuto extends LinearOpMode {
-
     public Robot robot = new Robot();
     private ElapsedTime runtime = new ElapsedTime();
 

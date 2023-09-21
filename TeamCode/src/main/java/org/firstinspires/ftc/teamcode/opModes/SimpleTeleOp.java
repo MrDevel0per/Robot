@@ -76,10 +76,10 @@ public class SimpleTeleOp extends LinearOpMode {
             double drive = gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
             double strafe = gamepad1.left_stick_x;
-            leftFrontPower    = Range.clip(drive + turn -strafe, -1.0, 1.0) ;
-            rightFrontPower   = Range.clip(drive - turn + strafe, -1.0, 1.0) ;
-            leftBackPower    = Range.clip(drive + turn + strafe, -1.0, 1.0) ;
-            rightBackPower   = Range.clip(drive - turn - strafe, -1.0, 1.0) ;
+            leftFrontPower    = Range.clip(drive - turn -strafe, -1.0, 1.0) ;
+            rightFrontPower   = Range.clip(drive + turn + strafe, -1.0, 1.0) ;
+            leftBackPower    = Range.clip(drive - turn + strafe, -1.0, 1.0) ;
+            rightBackPower   = Range.clip(drive + turn - strafe, -1.0, 1.0) ;
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.

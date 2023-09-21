@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robotModel;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
@@ -31,6 +31,7 @@ public class Chassis {
     //MARK: Instance Methods - Things that the Chassis class can do
 
     public void driveStraight(double distance,double power){
+        //definitely not finished!!!
         leftFront.setPower(power);
         rightFront.setPower(power);
         leftRear.setPower(power);

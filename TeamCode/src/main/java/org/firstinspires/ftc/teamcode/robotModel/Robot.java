@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.robotModel;
 
-import org.checkerframework.checker.units.qual.C;
+import org.firstinspires.ftc.teamcode.robotModel.Chassis;
+import org.firstinspires.ftc.teamcode.robotModel.Intake;
+import org.firstinspires.ftc.teamcode.robotModel.Launcher;
 
 public class Robot {
 

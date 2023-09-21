@@ -11,11 +11,11 @@ import org.firstinspires.ftc.teamcode.robotModel.Robot;
 @Autonomous(name="Simple Auto", group="Linear OpMode")
 //@Disabled
 public class SimpleAuto extends LinearOpMode {
-    public Robot robot = new Robot(hardwareMap, telemetry);
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
+        Robot robot = new Robot(hardwareMap, telemetry);
 
         waitForStart();
         runtime.reset();

@@ -22,7 +22,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="FirstOpMode", group="Linear OpMode")
 //@Disabled
-public class FirstOpMode extends LinearOpMode {
+public class SimpleTeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();

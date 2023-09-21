@@ -14,6 +14,8 @@ public class Robot {
 
     //attributes
     private Chassis chassis;
+    private Telemetry telemetry;
+    private HardwareMap hardwareMap;
     private Intake intake;
     private Launcher launcher;
     private DcMotor linearSlide;
@@ -22,6 +24,8 @@ public class Robot {
 
     public Robot(HardwareMap hardwareMap, Telemetry telemetry) {
         this.chassis = new Chassis(hardwareMap,telemetry);
+        this.telemetry=telemetry;
+        this.hardwareMap = hardwareMap;
         this.intake = intake;
         this.launcher = launcher;
         linearSlide = hardwareMap.get(DcMotor.class, "linear_slide");

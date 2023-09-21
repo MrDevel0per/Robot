@@ -13,6 +13,8 @@ public class Chassis {
 
     //MARK: Attributes
     final double TICKS_PER_INCH = 45.28479;
+    private Telemetry telemetry;
+    private HardwareMap hardwareMap;
     private DcMotor leftFront;
     private DcMotor rightFront;
     private DcMotor leftRear;
@@ -21,6 +23,8 @@ public class Chassis {
     //MARK: Constructors
 
     public Chassis(HardwareMap hardwareMap, Telemetry telemetry) {
+        this.telemetry = telemetry;
+        this.hardwareMap = hardwareMap;
         leftFront = hardwareMap.get(DcMotor.class,"left_front");
         leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFront = hardwareMap.get(DcMotor.class,"right_front");

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opModes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -49,10 +50,10 @@ public class SimpleTeleOp extends LinearOpMode {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -72,12 +73,13 @@ public class SimpleTeleOp extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = -gamepad1.left_stick_y;
+            double drive = gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            leftFrontPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightFrontPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-            leftBackPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightBackPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+            double strafe = gamepad1.left_stick_x;
+            leftFrontPower    = Range.clip(drive + turn +strafe, -1.0, 1.0) ;
+            rightFrontPower   = Range.clip(drive - turn - strafe, -1.0, 1.0) ;
+            leftBackPower    = Range.clip(drive + turn - strafe, -1.0, 1.0) ;
+            rightBackPower   = Range.clip(drive - turn + strafe, -1.0, 1.0) ;
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.

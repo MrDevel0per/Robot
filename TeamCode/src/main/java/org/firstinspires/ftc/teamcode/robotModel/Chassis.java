@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Chassis {
 
     //MARK: Attributes
@@ -18,7 +20,7 @@ public class Chassis {
 
     //MARK: Constructors
 
-    public Chassis() {
+    public Chassis(HardwareMap hardwareMap, Telemetry telemetry) {
         leftFront = hardwareMap.get(DcMotor.class,"left_front");
         leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFront = hardwareMap.get(DcMotor.class,"right_front");

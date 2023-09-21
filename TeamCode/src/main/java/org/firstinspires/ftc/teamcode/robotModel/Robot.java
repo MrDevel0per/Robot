@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.robotModel;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.robotModel.Chassis;
 import org.firstinspires.ftc.teamcode.robotModel.Intake;
 import org.firstinspires.ftc.teamcode.robotModel.Launcher;
@@ -18,8 +20,8 @@ public class Robot {
 
     //contstructor
 
-    public Robot() {
-        this.chassis = new Chassis();
+    public Robot(HardwareMap hardwareMap, Telemetry telemetry) {
+        this.chassis = new Chassis(hardwareMap,telemetry);
         this.intake = intake;
         this.launcher = launcher;
         linearSlide = hardwareMap.get(DcMotor.class, "linear_slide");

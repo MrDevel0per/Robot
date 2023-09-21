@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.robotModel.Robot;
 
-@Autonomous(name="Simple OpMode", group="Linear OpMode")
+@Autonomous(name="Simple Auto", group="Linear OpMode")
 //@Disabled
 public class SimpleAuto extends LinearOpMode {
     public Robot robot = new Robot();

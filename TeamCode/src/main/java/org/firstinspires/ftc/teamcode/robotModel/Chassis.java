@@ -52,6 +52,7 @@ public class Chassis {
         while(ticksToGo>ticksTravelled){
             ticksTravelled = Math.abs(rightRear.getCurrentPosition()-ticksStart);
             telemetry.addData("distance travelled",(rightRear.getCurrentPosition()-ticksStart)/TICKS_PER_INCH);
+            telemetry.update();
         }
 
         //stop motors

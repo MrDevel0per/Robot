@@ -19,10 +19,11 @@ public class SimpleAuto extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
+        robot.driveStraight(10,.8);
 
         // Call our loop
         while (opModeIsActive()) {
-            robot.driveStraight(10,.8);
+
         }
 
     }

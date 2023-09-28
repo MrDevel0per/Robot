@@ -6,11 +6,11 @@ public class OutputUtils {
 
     /**
      * `print` outputs the given `caption` and `value` to the robot's telemetry.
-     * @param caption
-     * @param value
+     * @param caption The caption to give the output in the console.
+     * @param value The actual value to be outputted.
      */
     public static void print(String caption, Object value) {
-        telemetry.addData("Feet Traveled:", (ticksTravelled / TICKS_PER_INCH) / 12);
+        telemetry.addData(caption, value);
         telemetry.update();
     }
 

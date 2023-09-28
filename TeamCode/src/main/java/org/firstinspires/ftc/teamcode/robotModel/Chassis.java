@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import static org.firstinspires.ftc.teamcode.utils.OutputUtils.print
 
 public class Chassis {
 
@@ -49,10 +50,9 @@ public class Chassis {
         rightRear.setPower(power);
         //enter a loop that checks for current distance
         int ticksTravelled=0;
-        while(ticksToGo>ticksTravelled){
-            ticksTravelled = Math.abs(rightRear.getCurrentPosition()-ticksStart);
-            telemetry.addData("distance travelled",ticksTravelled/TICKS_PER_INCH);
-            telemetry.update();
+        while(ticksToGo>ticksTravelled) {
+            ticksTravelled = Math.abs(rightRear.getCurrentPosition() - ticksStart);
+            print("Feed Traveled: ", (ticksTravelled / TICKS_PER_INCH) / 12)
         }
 
         //stop motors

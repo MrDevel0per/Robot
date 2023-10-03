@@ -36,5 +36,7 @@ public class Robot {
     public void driveStraight(double distance, double power){
         chassis.driveStraight(distance, power);
     }
-
+    public void pointTurn(int angle, double power) {
+        chassis.pointTurn(angle, power);
+    }
 }

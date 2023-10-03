@@ -19,8 +19,7 @@ public class SimpleAuto extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        robot.driveStraight(10,.8);
-
+        robot.pointTurn(360, 0.8);
         // Call our loop
         while (opModeIsActive()) {
 

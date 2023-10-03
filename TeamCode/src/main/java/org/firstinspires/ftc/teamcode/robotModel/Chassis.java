@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import static org.firstinspires.ftc.teamcode.utils.OutputUtils.print
+import static org.firstinspires.ftc.teamcode.utils.OutputUtils.print;
 
 public class Chassis {
 
@@ -52,14 +52,30 @@ public class Chassis {
         int ticksTravelled=0;
         while(ticksToGo>ticksTravelled) {
             ticksTravelled = Math.abs(rightRear.getCurrentPosition() - ticksStart);
-            print("Feed Traveled: ", (ticksTravelled / TICKS_PER_INCH) / 12)
+            print("Feed Traveled: ", (ticksTravelled / TICKS_PER_INCH) / 12);
         }
 
         //stop motors
         stop();
 
     }
-
+    public void pointTurn(int angle, double power){
+        double diameter = Math.sqrt(Math.pow(15 , 2)+Math.pow(15.2 , 2));
+        double distance = ((diameter * Math.PI/360) * angle) * TICKS_PER_INCH;
+        int ticksStart = rightRear.getCurrentPosition();
+        int ticksToGo = (int) (distance);
+        //start motors
+        leftFront.setPower(power);
+        rightFront.setPower(-power);
+        leftRear.setPower(power);
+        rightRear.setPower(-power);
+        //enter a loop that checks for current distance
+        int ticksTravelled=0;
+        while(ticksToGo>ticksTravelled) {
+            ticksTravelled = Math.abs(rightRear.getCurrentPosition() - ticksStart);
+            print("Feed Traveled: ", (ticksTravelled / TICKS_PER_INCH) / 12);
+    }
+}
     private void stop() {
         leftFront.setPower(0);
         rightFront.setPower(0);

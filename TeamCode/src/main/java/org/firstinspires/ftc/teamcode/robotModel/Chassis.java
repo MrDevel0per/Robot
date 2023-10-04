@@ -111,7 +111,7 @@ public class Chassis {
         //get current ticks
         int ticksStart = rightRear.getCurrentPosition();
         int ticksToGo = (int) (distance * TICKS_PER_INCH);
-        //start motors
+        //start motor
         leftFront.setPower(-power);
         rightFront.setPower(power);
         leftRear.setPower(power);

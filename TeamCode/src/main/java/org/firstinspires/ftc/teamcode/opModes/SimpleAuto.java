@@ -19,7 +19,6 @@ public class SimpleAuto extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        robot.strafeRight(50,0.8);
 
         // Call our loop
         while (opModeIsActive()) {

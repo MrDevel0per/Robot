@@ -42,6 +42,7 @@ public class Robot {
     public void strafeRight(double distance, double power){
         chassis.strafeRight(distance, power);
     }
+    //darn this gosh darn darn darn darn darn push stuff >:(
     public void strafeLeft(double distance, double power){
         chassis.strafeLeft(distance, power);
     }

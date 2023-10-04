@@ -27,12 +27,16 @@ public class Chassis {
         this.hardwareMap = hardwareMap;
         leftFront = hardwareMap.get(DcMotor.class,"left_front");
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront = hardwareMap.get(DcMotor.class,"right_front");
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftRear = hardwareMap.get(DcMotor.class,"left_rear");
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightRear = hardwareMap.get(DcMotor.class,"right_rear");
         rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
 
@@ -52,7 +56,8 @@ public class Chassis {
         int ticksTravelled=0;
         while(ticksToGo>ticksTravelled) {
             ticksTravelled = Math.abs(rightRear.getCurrentPosition() - ticksStart);
-            print("Feed Traveled: ", (ticksTravelled / TICKS_PER_INCH) / 12);
+            telemetry.addData("Distance Travelled",(ticksTravelled / TICKS_PER_INCH) / 12);
+            telemetry.update();
         }
 
         //stop motors
@@ -61,9 +66,9 @@ public class Chassis {
     }
     public void pointTurn(int angle, double power){
         double diameter = Math.sqrt(Math.pow(15 , 2)+Math.pow(15.2 , 2));
-        double distance = ((diameter * Math.PI/360) * angle) * TICKS_PER_INCH;
+        double distance = ((diameter * Math.PI/360) * angle);
         int ticksStart = rightRear.getCurrentPosition();
-        int ticksToGo = (int) (distance);
+        int ticksToGo = (int) (distance * TICKS_PER_INCH);
         //start motors
         leftFront.setPower(power);
         rightFront.setPower(-power);
@@ -73,8 +78,12 @@ public class Chassis {
         int ticksTravelled=0;
         while(ticksToGo>ticksTravelled) {
             ticksTravelled = Math.abs(rightRear.getCurrentPosition() - ticksStart);
-            print("Feed Traveled: ", (ticksTravelled / TICKS_PER_INCH) / 12);
+            //change telemetry to angle turned
+            telemetry.addData("Distance Turned",(ticksTravelled / TICKS_PER_INCH) / 12);
+            telemetry.update();
     }
+        //stop motors
+        stop();
 }
     private void stop() {
         leftFront.setPower(0);

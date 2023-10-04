@@ -39,4 +39,10 @@ public class Robot {
     public void pointTurn(int angle, double power) {
         chassis.pointTurn(angle, power);
     }
+    public void strafeRight(double distance, double power){
+        chassis.strafeRight(distance, power);
+    }
+    public void strafeLeft(double distance, double power){
+        chassis.strafeLeft(distance, power);
+    }
 }

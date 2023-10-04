@@ -85,6 +85,48 @@ public class Chassis {
         //stop motors
         stop();
 }
+    public void strafeRight(double distance,double power) {
+        //definitely not finished!!!
+        //get current ticks
+        int ticksStart = rightRear.getCurrentPosition();
+        int ticksToGo = (int) (distance * TICKS_PER_INCH);
+        //start motors
+        leftFront.setPower(power);
+        rightFront.setPower(-power);
+        leftRear.setPower(-power);
+        rightRear.setPower(power);
+        //enter a loop that checks for current distance
+        int ticksTravelled = 0;
+        while (ticksToGo > ticksTravelled) {
+            ticksTravelled = Math.abs(rightRear.getCurrentPosition() - ticksStart);
+            telemetry.addData("Distance Travelled", (ticksTravelled / TICKS_PER_INCH) / 12);
+            telemetry.update();
+        }
+
+        //stop motors
+        stop();
+    }
+    public void strafeLeft(double distance,double power) {
+        //definitely not finished!!!
+        //get current ticks
+        int ticksStart = rightRear.getCurrentPosition();
+        int ticksToGo = (int) (distance * TICKS_PER_INCH);
+        //start motors
+        leftFront.setPower(-power);
+        rightFront.setPower(power);
+        leftRear.setPower(power);
+        rightRear.setPower(-power);
+        //enter a loop that checks for current distance
+        int ticksTravelled = 0;
+        while (ticksToGo > ticksTravelled) {
+            ticksTravelled = Math.abs(rightRear.getCurrentPosition() - ticksStart);
+            telemetry.addData("Distance Travelled", (ticksTravelled / TICKS_PER_INCH) / 12);
+            telemetry.update();
+        }
+
+        //stop motors
+        stop();
+    }
     private void stop() {
         leftFront.setPower(0);
         rightFront.setPower(0);

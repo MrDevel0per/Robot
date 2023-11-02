@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode.robotModel;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import static org.firstinspires.ftc.teamcode.utils.OutputUtils.print;
+import static org.firstinspires.ftc.teamcode.util.OutputUtils.print;
 
 public class Chassis {
 
@@ -56,8 +53,7 @@ public class Chassis {
         int ticksTravelled=0;
         while(ticksToGo>ticksTravelled) {
             ticksTravelled = Math.abs(rightRear.getCurrentPosition() - ticksStart);
-            telemetry.addData("Distance Travelled",(ticksTravelled / TICKS_PER_INCH) / 12);
-            telemetry.update();
+            print("Distance Travelled", (ticksTravelled / TICKS_PER_INCH) / 12);
         }
 
         //stop motors

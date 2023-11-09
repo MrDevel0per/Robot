@@ -1,10 +1,25 @@
 package org.firstinspires.ftc.teamcode.robotModel;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import static org.firstinspires.ftc.teamcode.util.OutputUtils.print;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Chassis {
 
@@ -59,6 +74,20 @@ public class Chassis {
         //stop motors
         stop();
 
+    }
+    // Drive straight - RR implimentation
+    public Pose2d driveStraightWithRoadRunner(double distance, double power, HardwareMap hardwareMap) {
+        // TODO: Replace this with our custom `MecanumDriver`
+        List<DcMotor> motors =
+                Arrays.asList(leftFront, rightFront, leftRear, rightRear);
+        MecanumDriver drive = new MecanumDriver(hardwareMap, motors);
+
+        Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
+                .forward(distance)
+                .build();
+        drive.followTrajectory(trajectory);
+
+        return drive.getPoseEstimate();
     }
     public void pointTurn(int angle, double power){
         double diameter = Math.sqrt(Math.pow(15 , 2)+Math.pow(15.2 , 2));

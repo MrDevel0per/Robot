@@ -26,9 +26,8 @@ public class DriveConstants {
     public static final double TICKS_PER_REV = 537.6;
     public static final double MAX_RPM = 312;
 
-    // TODO: Ensure this is the correct orientation
+    // TODO: Is this right at all? IDK
     public static final RevHubOrientationOnRobot.LogoFacingDirection LOGO_FACING_DIR = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-    // TODO: Check orientation again
     public static final RevHubOrientationOnRobot.UsbFacingDirection USB_FACING_DIR = RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
     /*

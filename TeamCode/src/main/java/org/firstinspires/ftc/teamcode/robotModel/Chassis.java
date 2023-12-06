@@ -5,15 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import static org.firstinspires.ftc.teamcode.util.OutputUtils.print;
 
@@ -54,19 +45,19 @@ public class Chassis {
 
     //MARK: Instance Methods - Things that the Chassis class can do
 
-    public void driveStraight(double distance,double power){
+    public void driveStraight(double distance,double power) {
         //definitely not finished!!!
         //get current ticks
         int ticksStart = rightRear.getCurrentPosition();
-        int ticksToGo = (int) (distance*TICKS_PER_INCH);
+        int ticksToGo = (int) (distance * TICKS_PER_INCH);
         //start motors
         leftFront.setPower(power);
         rightFront.setPower(power);
         leftRear.setPower(power);
         rightRear.setPower(power);
         //enter a loop that checks for current distance
-        int ticksTravelled=0;
-        while(ticksToGo>ticksTravelled) {
+        int ticksTravelled = 0;
+        while (ticksToGo > ticksTravelled) {
             ticksTravelled = Math.abs(rightRear.getCurrentPosition() - ticksStart);
             print("Distance Travelled", (ticksTravelled / TICKS_PER_INCH) / 12);
         }
@@ -74,20 +65,6 @@ public class Chassis {
         //stop motors
         stop();
 
-    }
-    // Drive straight - RR implimentation
-    public Pose2d driveStraightWithRoadRunner(double distance, double power, HardwareMap hardwareMap) {
-        // TODO: Replace this with our custom `MecanumDriver`
-        List<DcMotor> motors =
-                Arrays.asList(leftFront, rightFront, leftRear, rightRear);
-        MecanumDriver drive = new MecanumDriver(hardwareMap, motors);
-
-        Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
-                .forward(distance)
-                .build();
-        drive.followTrajectory(trajectory);
-
-        return drive.getPoseEstimate();
     }
     public void pointTurn(int angle, double power){
         double diameter = Math.sqrt(Math.pow(15 , 2)+Math.pow(15.2 , 2));

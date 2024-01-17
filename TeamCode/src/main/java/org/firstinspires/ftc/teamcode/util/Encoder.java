@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
  */
 public class Encoder {
     private final static int CPS_STEP = 0x10000;
+    // TODO: Ensure proper number
+    private final static int TICKS_PER_INCH = 45;
 
     private static double inverseOverflow(double input, double estimate) {
         // convert to uint16
@@ -89,6 +91,8 @@ public class Encoder {
             lastPosition = currentPosition;
             lastUpdateTime = currentTime;
         }
+        // This number is in ticks. Divide it by TICKS_PER_INCH to get inches.
+        currentPosition = (int) (currentPosition / TICKS_PER_INCH);
         return currentPosition;
     }
 

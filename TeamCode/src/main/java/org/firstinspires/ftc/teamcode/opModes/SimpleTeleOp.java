@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import static org.firstinspires.ftc.teamcode.util.OutputUtils.print;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -21,7 +22,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Simple TeleOp", group="Linear OpMode")
+@TeleOp(name="USE THIS ONE (January 16)", group="Linear OpMode")
 //@Disabled
 public class SimpleTeleOp extends LinearOpMode {
 
@@ -45,6 +46,7 @@ public class SimpleTeleOp extends LinearOpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front");
         leftBackDrive = hardwareMap.get(DcMotor.class, "left_rear");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_rear");
+        // TODO: In the future, we will have three motors here: two that are synced to rotate the slide forward and backward, and one that is synced to rotate the intake.
         linearSlide = hardwareMap.get(DcMotor.class, "linear_slide");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -93,7 +95,7 @@ public class SimpleTeleOp extends LinearOpMode {
             rightBackDrive.setPower(rightBackPower);
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            print("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower, leftBackPower, rightBackPower);
             telemetry.update();
         }

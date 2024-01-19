@@ -74,4 +74,8 @@ public class Robot {
     public void strafeLeft(double distance, double power){
         chassis.strafeLeft(distance, power);
     }
+
+    // MARK: Arm methods
+
+
 }

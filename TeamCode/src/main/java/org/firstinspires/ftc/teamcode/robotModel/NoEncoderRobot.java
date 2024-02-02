@@ -51,6 +51,8 @@ public class NoEncoderRobot {
 
     public void unGrip(){arm.unGrip();}
 
+    public void clawRotation(double power){arm.rotate(power);}
+
     public void upDownArm(double power) {
         arm.upDown(power);
     }

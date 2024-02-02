@@ -66,6 +66,10 @@ public class NoEncoderTeleOp extends LinearOpMode {
             robot.upDownArm(0);
         }
 
+        double clawRotation = gamepad1.right_stick_y;
+        double rotationPower = Range.clip(clawRotation, -1.0, 1.0);
+        robot.clawRotation(rotationPower);
+
         // Servos forward/backward controlled by X and B
         boolean grip = gamepad1.x;
         boolean unGrip = gamepad1.b;

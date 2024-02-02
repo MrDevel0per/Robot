@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.robotModel;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -16,7 +15,7 @@ public class NoEncoderRobot {
     public NoEncoderRobot(HardwareMap hardwareMap, Telemetry telemetry) {
         this.chassis = new NoEncoderChassis(hardwareMap, telemetry);
         this.telemetry=telemetry;
-        this.arm = arm;
+        this.arm = new Arm(hardwareMap);
         this.launcher = launcher;
     }
 
@@ -44,15 +43,20 @@ public class NoEncoderRobot {
         chassis.stop();
     }
 
-    public void rotateArm(double power) {
+    /*public void rotateArm(double power) {
         arm.rotate(power);
-    }
+    }*/
+
+    public void grip(){arm.grip();}
+
+    public void unGrip(){arm.unGrip();}
 
     public void upDownArm(double power) {
         arm.upDown(power);
     }
 
-    public void shovelArm(double power) {
-        arm.shovel(power);
-    }
+
+    //public void shovelArm(double power) {
+    //    arm.shovel(power);
+    //}
 }

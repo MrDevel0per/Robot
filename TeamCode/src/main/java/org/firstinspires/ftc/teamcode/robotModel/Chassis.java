@@ -35,16 +35,16 @@ public class Chassis {
         this.telemetry = telemetry;
         this.hardwareMap = hardwareMap;
         leftFront = hardwareMap.get(DcMotor.class,"left_front");
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront = hardwareMap.get(DcMotor.class,"right_front");
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftRear = hardwareMap.get(DcMotor.class,"left_rear");
-        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
         leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightRear = hardwareMap.get(DcMotor.class,"right_rear");
-        rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // NOTE: We don't need to set the direction of the encoders because we already did that in the Robot class
         this.rightEncoder = rightEncoder;

@@ -1,55 +1,59 @@
 package org.firstinspires.ftc.teamcode.robotModel;
 
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Arm {
     // Motors for controlling rotate forward/backward
-    private DcMotorEx leftRotator;
-    private DcMotorEx rightRotator;
+    //private DcMotor leftRotator;
+    //private DcMotor rightRotator;
 
     // Motor for controlling up/down
-    private DcMotorEx upDownMotor;
+    private DcMotor upDownMotor;
+    private Servo clawServo = null;
+    private Servo clawServoTwo = null;
 
-    // Motor for controlling forward/backward of shovel
-//    private CRServo leftFrontShovel;
-//    private CRServo rightFrontShovel;
-//    private CRServo leftRearShovel;
-//    private CRServo rightRearShovel;
-
+    // Motor for controlling open/close of the claw
     private HardwareMap hardwareMap;
+    private Telemetry telemetry;
 
     public Arm(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
-        this.leftRotator = hardwareMap.get(DcMotorEx.class, "left_rotator");
-        this.rightRotator = hardwareMap.get(DcMotorEx.class, "right_rotator");
-        this.upDownMotor = hardwareMap.get(DcMotorEx.class, "up_down_motor");
-//        this.leftFrontShovel = hardwareMap.get(CRServo.class, "left_front_shovel");
-//        this.rightFrontShovel = hardwareMap.get(CRServo.class, "right_front_shovel");
-//        this.leftRearShovel = hardwareMap.get(CRServo.class, "left_rear_shovel");
-//        this.rightRearShovel = hardwareMap.get(CRServo.class, "right_rear_shovel");
+        this.upDownMotor = hardwareMap.get(DcMotor.class, "up_down_motor");
+        upDownMotor.setDirection(DcMotor.Direction.REVERSE);
+        this.clawServo = hardwareMap.get(Servo.class, "claw_servo");
+        clawServo.setDirection(Servo.Direction.FORWARD);
+        this.clawServoTwo = hardwareMap.get(Servo.class, "claw_servo_two");
+        clawServoTwo.setDirection(Servo.Direction.REVERSE);
+
     }
 
-    public void rotate(double power) {
+
+        public void grip(){
+            clawServo.setPosition(1.0);
+            clawServoTwo.setPosition(1.0);
+        }
+
+        public void unGrip() {
+            clawServo.setPosition(0.0);
+            clawServoTwo.setPosition(0.0);
+        }
+
+    /*public void rotate(double power) {
         leftRotator.setPower(power);
         rightRotator.setPower(power);
-    }
+    }*/
 
     public void upDown(double power) {
+
         upDownMotor.setPower(power);
     }
 
-    public void shovel(double power) {
-        // The input power is from -1 to 1
-        // Convert it to 0 to 1 - -1 is now 0, 0 is now .5, and 1 is now 1
-        power = (power + 1) / 2;
-        // Continuously rotate servos
-//        leftFrontShovel.setPower(power);
-//        rightFrontShovel.setPower(power);
-//        leftRearShovel.setPower(power);
-//        rightRearShovel.setPower(power);
 
-    }
 }
+
+
+

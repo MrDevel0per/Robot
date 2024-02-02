@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -27,6 +28,7 @@ public class NoEncoderTeleOp extends LinearOpMode {
     // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             handleRobotMovement();
+            handleArmMovement();
 
     }
     }
@@ -48,8 +50,9 @@ public class NoEncoderTeleOp extends LinearOpMode {
 
     void handleArmMovement() {
         // Use the y value of the right stick to determine rotation
-        double armRotation = gamepad1.right_stick_y;
-        robot.rotateArm(armRotation);
+        /*double armRotation = gamepad1.right_stick_y;
+        double rotationPower = Range.clip(armRotation, -1.0, 1.0);
+        robot.rotateArm(rotationPower);*/
         // Use the y button to move up and x button to move down
         boolean yValue = gamepad1.y;
         boolean aValue = gamepad1.a;
@@ -64,7 +67,20 @@ public class NoEncoderTeleOp extends LinearOpMode {
         }
 
         // Servos forward/backward controlled by X and B
-        boolean xValue = gamepad1.x;
+        boolean grip = gamepad1.x;
+        boolean unGrip = gamepad1.b;
+
+        if (grip){
+            robot.grip();
+        }
+        if (unGrip){
+            robot.unGrip();
+        }
+
+
+
+
+        /*boolean xValue = gamepad1.x;
         boolean bValue = gamepad1.b;
 
         if (xValue ^ bValue) {
@@ -75,6 +91,6 @@ public class NoEncoderTeleOp extends LinearOpMode {
             }
         } else {
             robot.shovelArm(0);
-        }
+        }*/
     }
 }

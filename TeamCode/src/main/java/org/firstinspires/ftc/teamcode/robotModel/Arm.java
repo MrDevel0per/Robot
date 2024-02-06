@@ -15,6 +15,8 @@ public class Arm {
 
     // Motor for controlling up/down
     private DcMotor upDownMotor;
+    private DcMotor leftRotator;
+    private DcMotor rightRotator;
     private Servo clawServo = null;
     private Servo clawServoTwo = null;
 
@@ -28,6 +30,10 @@ public class Arm {
         this.hardwareMap = hardwareMap;
         this.upDownMotor = hardwareMap.get(DcMotor.class, "up_down_motor");
         upDownMotor.setDirection(DcMotor.Direction.REVERSE);
+        this.leftRotator = hardwareMap.get(DcMotor.class,"left_rotator");
+        leftRotator.setDirection(DcMotor.Direction.FORWARD);
+        this.rightRotator = hardwareMap.get(DcMotor.class,"right_rotator");
+        rightRotator.setDirection(DcMotor.Direction.FORWARD);
         this.clawRotator = hardwareMap.get(CRServo.class, "claw_rotator");
         clawRotator.setDirection(CRServo.Direction.FORWARD);
         this.clawServo = hardwareMap.get(Servo.class, "claw_servo");
@@ -48,13 +54,21 @@ public class Arm {
             clawServoTwo.setPosition(0.0);
         }
 
-        public void rotate(double power){
+
+        /*public void clawForward(){
+        clawRotator.setPosition(0.6);
+        }
+        public void clawBackwards(){
+        clawRotator.setPosition(0.4);
+        }*/
+
+        public void clawRotate(double power){
         clawRotator.setPower(power);
         }
-    /*public void rotate(double power) {
+    public void armRotate(double power) {
         leftRotator.setPower(power);
         rightRotator.setPower(power);
-    }*/
+    }
 
     public void upDown(double power) {
 

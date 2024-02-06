@@ -49,10 +49,14 @@ public class NoEncoderTeleOp extends LinearOpMode {
     }
 
     void handleArmMovement() {
+
+        //Gamepad 1 Controls
+
         // Use the y value of the right stick to determine rotation
-        /*double armRotation = gamepad1.right_stick_y;
-        double rotationPower = Range.clip(armRotation, -1.0, 1.0);
-        robot.rotateArm(rotationPower);*/
+        double armRotation = gamepad1.right_stick_y;
+        double armRotationPower = Range.clip(armRotation, -1.0, 1.0);
+        robot.rotateArm(armRotationPower);
+
         // Use the y button to move up and x button to move down
         boolean yValue = gamepad1.y;
         boolean aValue = gamepad1.a;
@@ -66,13 +70,28 @@ public class NoEncoderTeleOp extends LinearOpMode {
             robot.upDownArm(0);
         }
 
-        double clawRotation = gamepad1.right_stick_y;
-        double rotationPower = Range.clip(clawRotation, -1.0, 1.0);
-        robot.clawRotation(rotationPower);
+
+
+        /*boolean clawRotationForward = gamepad1.x;
+        boolean clawRotationBackwards = gamepad1.b;
+        if (clawRotationForward){
+            robot.forward();
+        }
+        if (clawRotationBackwards){
+            robot.backwards();
+        }*/
+
+
+
+        //Gamepad 2 Controls
+
+        double clawRotation = gamepad2.left_stick_y;
+        double clawRotationPower = Range.clip(clawRotation, -1.0, 1.0);
+        robot.clawRotator(clawRotationPower);
 
         // Servos forward/backward controlled by X and B
-        boolean grip = gamepad1.x;
-        boolean unGrip = gamepad1.b;
+        boolean grip = gamepad2.x;
+        boolean unGrip = gamepad2.b;
 
         if (grip){
             robot.grip();

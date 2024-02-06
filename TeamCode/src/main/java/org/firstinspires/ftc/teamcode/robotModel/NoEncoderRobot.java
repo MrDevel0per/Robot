@@ -43,15 +43,18 @@ public class NoEncoderRobot {
         chassis.stop();
     }
 
-    /*public void rotateArm(double power) {
-        arm.rotate(power);
-    }*/
+    public void rotateArm(double power) {
+        arm.armRotate(power);
+    }
 
     public void grip(){arm.grip();}
 
     public void unGrip(){arm.unGrip();}
 
-    public void clawRotation(double power){arm.rotate(power);}
+    public void clawRotator(double power){arm.clawRotate(power);}
+
+    //public void forward(){arm.clawForward();}
+    //public void backwards(){arm.clawBackwards();}
 
     public void upDownArm(double power) {
         arm.upDown(power);

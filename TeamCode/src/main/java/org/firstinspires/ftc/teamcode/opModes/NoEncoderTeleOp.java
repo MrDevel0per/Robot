@@ -40,10 +40,10 @@ public class NoEncoderTeleOp extends LinearOpMode {
             double drive = gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
             double strafe = gamepad1.left_stick_x;
-            double leftFrontPower    = Range.clip(drive - turn -strafe, -1.0, 1.0) ;
-            double  rightFrontPower   = Range.clip(drive + turn + strafe, -1.0, 1.0) ;
-            double leftBackPower    = Range.clip(drive - turn + strafe, -1.0, 1.0) ;
-            double rightBackPower   = Range.clip(drive + turn - strafe, -1.0, 1.0) ;
+            double leftFrontPower    = Range.clip(drive - turn -strafe, -0.75, 0.75) ;
+            double  rightFrontPower   = Range.clip(drive + turn + strafe, -0.75, 0.75) ;
+            double leftBackPower    = Range.clip(drive - turn + strafe, -0.75, 0.75) ;
+            double rightBackPower   = Range.clip(drive + turn - strafe, -0.75, 0.75) ;
             robot.setMotorPowers(leftFrontPower, rightFrontPower, leftBackPower, rightBackPower);
         }
     }
@@ -56,6 +56,7 @@ public class NoEncoderTeleOp extends LinearOpMode {
         double armRotation = gamepad1.right_stick_y;
         double armRotationPower = Range.clip(armRotation, -1.0, 1.0);
         robot.rotateArm(armRotationPower);
+
 
         // Use the y button to move up and x button to move down
         boolean yValue = gamepad1.y;
@@ -85,11 +86,19 @@ public class NoEncoderTeleOp extends LinearOpMode {
 
         //Gamepad 2 Controls
 
+        //Have set positions where the arm holds its location
+        //Posibility of having the claw and the arm both rotate with one button press.
+        boolean armGround = gamepad2.;
+        boolean armTranport = gamepad2.;
+        boolean armDrop1stLine = gamepad2.;
+        boolean armDrop2ndLine =gamepad2.;
+
+        //Control claw angle with the y value of the left stick
         double clawRotation = gamepad2.left_stick_y;
         double clawRotationPower = Range.clip(clawRotation, -1.0, 1.0);
         robot.clawRotator(clawRotationPower);
 
-        // Servos forward/backward controlled by X and B
+        // Servos open/close controlled by X and B
         boolean grip = gamepad2.x;
         boolean unGrip = gamepad2.b;
 

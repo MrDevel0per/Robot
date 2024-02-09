@@ -47,8 +47,21 @@ public class NoEncoderRobot {
         arm.armRotate(power);
     }
 
-    public void rotateArmButton(){
-        arm.rotateArm();
+    /*public void rotateArmButton(){
+        Arm.Position position = null;
+        arm.rotateArm(position);
+    }*/
+    public void rotateArmButton1(){
+        arm.rotateArm(Arm.Position.GROUND);
+    }
+    public void rotateArmButton2(){
+        arm.rotateArm(Arm.Position.TRANSPORT);
+    }
+    public void rotateArmButton3(){
+        arm.rotateArm(Arm.Position.FIRST_LINE);
+    }
+    public void rotateArmButton4(){
+        arm.rotateArm(Arm.Position.SECOND_LINE);
     }
 
     public void grip(){arm.grip();}

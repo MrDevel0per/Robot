@@ -63,10 +63,10 @@ public class Arm {
     public enum Position {
         // TODO: Update to correct degrees
 
-        GROUND(5),
-        FIRST_LINE(10),
-        SECOND_LINE(20),
-        TRANSPORT(30);
+        GROUND(1),
+        FIRST_LINE(2),
+        SECOND_LINE(3),
+        TRANSPORT(4);
 
         public final int DEGREES_OF_360;
 
@@ -90,13 +90,16 @@ public class Arm {
         if (Math.abs(difference) > 180) { // Check for shorter counter-clockwise rotation
             direction = -1;
             difference = (360 - currentPosition) + targetPosition;
+            System.out.println("Difference: " + difference);
         }
 
         // 4. Move motors smoothly:
-        while (Math.abs(difference) > 5) { // Adjust the threshold as needed
-            int power = (int) Math.signum(difference) * (Math.min(Math.abs(difference), 20)); // Scale power smoothly
-            rightRotator.setPower(power * direction);
-            leftRotator.setPower(power * direction);
+        while (Math.abs(difference) > 60) {// Adjust the threshold as needed
+            int power = (int) Math.signum(difference) * (Math.min(Math.abs(difference), 1)); // Scale power smoothly
+            System.out.println("Direction: " + direction);
+            System.out.println("Power: " + power);
+            rightRotator.setPower(power * direction * 0.3);
+            leftRotator.setPower(power * direction * 0.3);
             difference = getArmRotation() - targetPosition; // Update difference
         }
 
@@ -113,7 +116,7 @@ public class Arm {
         // Calculate movement
         // Calculate movement direction
         // It's ok if the motor is off by [MAX_CLICKS_OFF] clicks
-        double TICKS_PER_360_DEGREES = 28;
+        double TICKS_PER_360_DEGREES = 537.7;
 //        int allowedErrorDegrees = 4/360;
         int allowedError = 1;
         int currentMotorPosition = this.getArmRotation();

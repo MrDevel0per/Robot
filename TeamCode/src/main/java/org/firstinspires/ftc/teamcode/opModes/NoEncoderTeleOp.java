@@ -93,6 +93,18 @@ public class NoEncoderTeleOp extends LinearOpMode {
         boolean armDrop1stLine = gamepad2.a;
         boolean armDrop2ndLine =gamepad2.b;
 
+        if (armGround) {
+            robot.rotateArmButton1();
+        }
+        if (armTranport) {
+            robot.rotateArmButton2();
+        }
+        if (armDrop1stLine) {
+            robot.rotateArmButton3();
+        }
+        if (armDrop2ndLine) {
+            robot.rotateArmButton4();
+        }
         //Control claw angle with the y value of the left stick
         double clawRotation = gamepad2.left_stick_y;
         double clawRotationPower = Range.clip(clawRotation, -1.0, 1.0);

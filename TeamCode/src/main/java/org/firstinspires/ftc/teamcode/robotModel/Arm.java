@@ -106,7 +106,8 @@ public class Arm {
         // 5. Final adjustment:
         rightRotator.setPower(0);
         leftRotator.setPower(0);
-        rotateArmToDesiredPos(targetPosition); // Ensure final position accuracy
+        isHolding = true;
+        hold(); // Ensure final position accuracy
 
     }
 

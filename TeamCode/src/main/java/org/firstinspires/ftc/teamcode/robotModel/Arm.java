@@ -86,7 +86,7 @@ public class Arm {
         int allowedError = 1;
         int currentMotorPosition = this.getArmRotation();
         int difference = desiredPosition - currentMotorPosition;
-        double power = 0.5;
+        double power = 0.1;
         if (difference > allowedError) {
             rightRotator.setPower(power);
             leftRotator.setPower(power);

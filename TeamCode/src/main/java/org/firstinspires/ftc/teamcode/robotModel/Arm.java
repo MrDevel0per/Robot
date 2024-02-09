@@ -105,7 +105,7 @@ public class Arm {
         long currentTime = System.nanoTime();
         while (isHolding) {
             int currentMotorPosition = getArmRotation();
-            if (currentMotorPosition != startingMotorPosition) {
+            if (Math.abs(currentMotorPosition - startingMotorPosition) > 1) {
                 rotateArmToDesiredPos(startingMotorPosition);
             }
             while (System.nanoTime() - currentTime < CHECK_EVERY_MILLISECONDS) {

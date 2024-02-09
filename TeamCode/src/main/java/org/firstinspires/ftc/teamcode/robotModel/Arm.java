@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robotModel;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -13,7 +14,7 @@ public class Arm {
     //private DcMotor rightRotator;
 
     // Motor for controlling up/down
-    private DcMotor upDownMotor;
+    //private DcMotor upDownMotor;
     private DcMotor leftRotator;
     private DcMotor rightRotator;
     private Servo clawServo = null;
@@ -29,12 +30,12 @@ public class Arm {
 
     public Arm(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
-        this.upDownMotor = hardwareMap.get(DcMotor.class, "up_down_motor");
-        upDownMotor.setDirection(DcMotor.Direction.REVERSE);
+        //this.upDownMotor = hardwareMap.get(DcMotor.class, "up_down_motor");
+        //upDownMotor.setDirection(DcMotor.Direction.REVERSE);
         this.leftRotator = hardwareMap.get(DcMotor.class, "left_rotator");
         leftRotator.setDirection(DcMotor.Direction.FORWARD);
         this.rightRotator = hardwareMap.get(DcMotor.class, "right_rotator");
-        rightRotator.setDirection(DcMotor.Direction.FORWARD);
+        rightRotator.setDirection(DcMotor.Direction.REVERSE);
         this.clawRotator = hardwareMap.get(CRServo.class, "claw_rotator");
         clawRotator.setDirection(CRServo.Direction.FORWARD);
         this.clawServo = hardwareMap.get(Servo.class, "claw_servo");
@@ -62,7 +63,7 @@ public class Arm {
     public enum Position {
         // TODO: Update to correct degrees
 
-        GROUND(0),
+        GROUND(5),
         FIRST_LINE(10),
         SECOND_LINE(20),
         TRANSPORT(30);
@@ -77,9 +78,36 @@ public class Arm {
         isHolding = false;
         // TODO: First, set current position to the bottom position
         // TODO: Then, calculate necessary to get to ground
+        // 1. Set current position:
+        int currentPosition = getArmRotation();
 
+        // 2. Calculate necessary movement:
+        int targetPosition = position.DEGREES_OF_360;
+        int difference = targetPosition - currentPosition;
+
+        // 3. Handle direction and movement:
+        int direction = 1; // Assume clockwise initially
+        if (Math.abs(difference) > 180) { // Check for shorter counter-clockwise rotation
+            direction = -1;
+            difference = (360 - currentPosition) + targetPosition;
+        }
+
+        // 4. Move motors smoothly:
+        while (Math.abs(difference) > 5) { // Adjust the threshold as needed
+            int power = (int) Math.signum(difference) * (Math.min(Math.abs(difference), 20)); // Scale power smoothly
+            rightRotator.setPower(power * direction);
+            leftRotator.setPower(power * direction);
+            difference = getArmRotation() - targetPosition; // Update difference
+        }
+
+        // 5. Final adjustment:
+        rightRotator.setPower(0);
+        leftRotator.setPower(0);
+        rotateArmToDesiredPos(targetPosition); // Ensure final position accuracy
 
     }
+
+
 
     private void rotateArmToDesiredPos(int desiredPosition) {
         // Calculate movement
@@ -143,10 +171,10 @@ public class Arm {
         rightRotator.setPower(power);
     }
 
-    public void upDown(double power) {
+    /*public void upDown(double power) {
 
         upDownMotor.setPower(power);
-    }
+    }*/
 
 
 }

@@ -90,9 +90,11 @@ public class Arm {
         if (difference > allowedError) {
             rightRotator.setPower(power);
             leftRotator.setPower(power);
+            rotateArmToDesiredPos(desiredPosition);
         } else if (difference < -allowedError) {
             rightRotator.setPower(-power);
             leftRotator.setPower(-power);
+            rotateArmToDesiredPos(desiredPosition);
         } else {
             rightRotator.setPower(0);
             leftRotator.setPower(0);

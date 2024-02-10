@@ -47,10 +47,10 @@ public class Arm {
     }
 
     public enum Position {
-        GROUND(1),
-        FIRST_LINE(2),
-        SECOND_LINE(3),
-        TRANSPORT(4);
+        GROUND(10),
+        FIRST_LINE(20),
+        SECOND_LINE(30),
+        TRANSPORT(40);
 
         public final int DEGREES_OF_360;
 
@@ -86,7 +86,7 @@ public class Arm {
         int allowedError = 1;
         int currentMotorPosition = this.getArmRotation();
         int difference = desiredPosition - currentMotorPosition;
-        double power = 0.1;
+        double power = 0.25;
         if (difference > allowedError) {
             rightRotator.setPower(power);
             leftRotator.setPower(power);

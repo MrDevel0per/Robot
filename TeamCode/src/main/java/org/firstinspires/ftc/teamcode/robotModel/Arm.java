@@ -101,7 +101,8 @@ public class Arm {
         }
     }
 
-    public void hold() {
+  public void hold() {
+    new Thread(() -> {
         long CHECK_EVERY_MILLISECONDS = 100;
         int startingMotorPosition = getArmRotation();
         long currentTime = System.nanoTime();
@@ -117,7 +118,8 @@ public class Arm {
             }
             currentTime = System.nanoTime();
         }
-    }
+    }).start();
+}
 
     public void clawRotate(double power) {
         clawRotator.setPower(power);

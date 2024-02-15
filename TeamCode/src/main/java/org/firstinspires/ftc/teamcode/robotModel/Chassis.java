@@ -1,49 +1,43 @@
 package org.firstinspires.ftc.teamcode.robotModel;
 
+import static org.firstinspires.ftc.teamcode.util.OutputUtils.print;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.util.Encoder;
-
-import static org.firstinspires.ftc.teamcode.util.OutputUtils.print;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Chassis {
 
     //MARK: Attributes
     final double TICKS_PER_INCH = 45.28479;
-    private Telemetry telemetry;
-    private HardwareMap hardwareMap;
-    private DcMotor leftFront;
-    private DcMotor rightFront;
-    private DcMotor leftRear;
-    private DcMotor rightRear;
+    private final Telemetry telemetry;
+    private final DcMotor leftFront;
+    private final DcMotor rightFront;
+    private final DcMotor leftRear;
+    private final DcMotor rightRear;
 
-    private Encoder leftEncoder;
-    private Encoder rightEncoder;
-    private Encoder sidewaysEncoder;
+    private final Encoder leftEncoder;
+    private final Encoder rightEncoder;
+    private final Encoder sidewaysEncoder;
 
 
     //MARK: Constructors
 
     public Chassis(HardwareMap hardwareMap, Telemetry telemetry, Encoder leftEncoder, Encoder rightEncoder, Encoder sidewaysEncoder) {
         this.telemetry = telemetry;
-        this.hardwareMap = hardwareMap;
-        leftFront = hardwareMap.get(DcMotor.class,"left_front");
+        leftFront = hardwareMap.get(DcMotor.class, "left_front");
         leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront = hardwareMap.get(DcMotor.class,"right_front");
+        rightFront = hardwareMap.get(DcMotor.class, "right_front");
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftRear = hardwareMap.get(DcMotor.class,"left_rear");
+        leftRear = hardwareMap.get(DcMotor.class, "left_rear");
         leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
         leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightRear = hardwareMap.get(DcMotor.class,"right_rear");
+        rightRear = hardwareMap.get(DcMotor.class, "right_rear");
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // NOTE: We don't need to set the direction of the encoders because we already did that in the Robot class
@@ -59,24 +53,26 @@ public class Chassis {
     int getCurrentPosition() {
         return (leftEncoder.getCurrentPosition() + rightEncoder.getCurrentPosition()) / 2;
     }
+
     int getSidewaysPosition() {
         return sidewaysEncoder.getCurrentPosition();
     }
+
     double getSidewaysMovement(int startingPosition) {
         return getSidewaysPosition() - startingPosition;
     }
+
     double getStraightMovement(int startingPosition) {
         return getCurrentPosition() - startingPosition;
     }
 
 
     /**
-     *
      * @param distance: distance in inches
-     * @param power: power from -1 to 1
+     * @param power:    power from -1 to 1
      * @see org.firstinspires.ftc.teamcode.robotModel.Robot
      */
-    public void driveStraight(double distance,double power,boolean shouldStop) {
+    public void driveStraight(double distance, double power, boolean shouldStop) {
         // First, get the current position
         int startingPosition = getCurrentPosition();
         //definitely not finished!!!
@@ -101,13 +97,13 @@ public class Chassis {
     }
 
 
-
     public void driveStraight(double distance, double power) {
         driveStraight(distance, power, true);
     }
-    public void pointTurn(int angle, double power, boolean shouldStop){
-        double diameter = Math.sqrt(Math.pow(15 , 2)+Math.pow(15.2 , 2));
-        double distance = ((diameter * Math.PI/360) * angle);
+
+    public void pointTurn(int angle, double power, boolean shouldStop) {
+        double diameter = Math.sqrt(Math.pow(15, 2) + Math.pow(15.2, 2));
+        double distance = ((diameter * Math.PI / 360) * angle);
         int startingPosition = rightEncoder.getCurrentPosition();
         //start motors
         leftFront.setPower(power);
@@ -117,18 +113,20 @@ public class Chassis {
         //enter a loop that checks for current distance
         // TODO: Refractor to abstract logic
         int amountTraveled = 0;
-        while(amountTraveled < distance) {
+        while (amountTraveled < distance) {
             amountTraveled = Math.abs(rightRear.getCurrentPosition() - startingPosition);
             //change telemetry to angle turned
-            print("Distance Travelled (ft)", amountTraveled/12);
-    }
+            print("Distance Travelled (ft)", amountTraveled / 12);
+        }
         //stop motors
         stop(shouldStop);
-}
+    }
+
     public void pointTurn(int angle, double power) {
         pointTurn(angle, power, true);
     }
-    public void strafeRight(double distance,double power,boolean shouldStop) {
+
+    public void strafeRight(double distance, double power, boolean shouldStop) {
         int startingPosition = getSidewaysPosition();
 
         //definitely not finished!!!
@@ -151,7 +149,8 @@ public class Chassis {
     public void strafeRight(double distance, double power) {
         strafeRight(distance, power, true);
     }
-    public void strafeLeft(double distance,double power,boolean shouldStop) {
+
+    public void strafeLeft(double distance, double power, boolean shouldStop) {
         //definitely not finished!!!
         int startingPosition = getSidewaysPosition();
         //start motor
@@ -167,18 +166,19 @@ public class Chassis {
             print("Distance Travelled", getSidewaysMovement(startingPosition));
         }
         stop(shouldStop);
-        }
+    }
 
     public void strafeLeft(double distance, double power) {
         strafeLeft(distance, power, true);
     }
+
     private void stop(boolean shouldStop) {
-    if (shouldStop) {
-        leftFront.setPower(0);
-        rightFront.setPower(0);
-        leftRear.setPower(0);
-        rightRear.setPower(0);
-    }
+        if (shouldStop) {
+            leftFront.setPower(0);
+            rightFront.setPower(0);
+            leftRear.setPower(0);
+            rightRear.setPower(0);
+        }
     }
 
 }

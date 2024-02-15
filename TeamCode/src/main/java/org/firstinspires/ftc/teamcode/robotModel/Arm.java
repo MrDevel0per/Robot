@@ -1,49 +1,29 @@
 package org.firstinspires.ftc.teamcode.robotModel;
 
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Arm {
-    private DcMotor leftRotator;
-    private DcMotor rightRotator;
-    private Servo clawServo = null;
-    private Servo clawServoTwo = null;
-    private CRServo clawRotator = null;
-    private HardwareMap hardwareMap;
-    private Telemetry telemetry;
+    private final Motors motors;
+    private final Servos servos;
     public boolean isHolding = true;
 
     public Arm(HardwareMap hardwareMap) {
-        this.hardwareMap = hardwareMap;
-        this.leftRotator = hardwareMap.get(DcMotor.class, "left_rotator");
-        leftRotator.setDirection(DcMotor.Direction.FORWARD);
-        this.rightRotator = hardwareMap.get(DcMotor.class, "right_rotator");
-        rightRotator.setDirection(DcMotor.Direction.REVERSE);
-        this.clawRotator = hardwareMap.get(CRServo.class, "claw_rotator");
-        clawRotator.setDirection(CRServo.Direction.FORWARD);
-        this.clawServo = hardwareMap.get(Servo.class, "claw_servo");
-        clawServo.setDirection(Servo.Direction.FORWARD);
-        this.clawServoTwo = hardwareMap.get(Servo.class, "claw_servo_two");
-        clawServoTwo.setDirection(Servo.Direction.REVERSE);
+        this.motors = new Motors(hardwareMap);
+        this.servos = new Servos(hardwareMap);
     }
 
     public void grip() {
-        clawServo.setPosition(1.0);
-        clawServoTwo.setPosition(1.0);
+        servos.rightClawServo.setPosition(1.0);
+        servos.leftClawServo.setPosition(1.0);
     }
 
     public void unGrip() {
-        clawServo.setPosition(0.0);
-        clawServoTwo.setPosition(0.0);
+        servos.rightClawServo.setPosition(0.0);
+        servos.leftClawServo.setPosition(0.0);
     }
 
     public int getArmRotation() {
-        return (this.leftRotator.getCurrentPosition() + this.rightRotator.getCurrentPosition()) / 2;
+        return (motors.leftRotator.getCurrentPosition() + motors.rightRotator.getCurrentPosition()) / 2;
     }
 
     public enum Position {
@@ -54,7 +34,7 @@ public class Arm {
 
         public final int DEGREES_OF_360;
 
-        private Position(int degrees) {
+        Position(int degrees) {
             this.DEGREES_OF_360 = degrees;
         }
     }
@@ -71,12 +51,12 @@ public class Arm {
         }
         while (Math.abs(difference) > 60) {
             int power = (int) Math.signum(difference) * (Math.min(Math.abs(difference), 1));
-            rightRotator.setPower(power * direction * 0.3);
-            leftRotator.setPower(power * direction * 0.3);
+            motors.rightRotator.setPower(power * direction * 0.3);
+            motors.leftRotator.setPower(power * direction * 0.3);
             difference = getArmRotation() - targetPosition;
         }
-        rightRotator.setPower(0);
-        leftRotator.setPower(0);
+        motors.rightRotator.setPower(0);
+        motors.leftRotator.setPower(0);
         isHolding = true;
         hold();
     }
@@ -88,16 +68,16 @@ public class Arm {
         int difference = desiredPosition - currentMotorPosition;
         double power = 0.25;
         if (difference > allowedError) {
-            rightRotator.setPower(power);
-            leftRotator.setPower(power);
+            motors.rightRotator.setPower(power);
+            motors.leftRotator.setPower(power);
             rotateArmToDesiredPos(desiredPosition);
         } else if (difference < -allowedError) {
-            rightRotator.setPower(-power);
-            leftRotator.setPower(-power);
+            motors.rightRotator.setPower(-power);
+            motors.leftRotator.setPower(-power);
             rotateArmToDesiredPos(desiredPosition);
         } else {
-            rightRotator.setPower(0);
-            leftRotator.setPower(0);
+            motors.rightRotator.setPower(0);
+            motors.leftRotator.setPower(0);
         }
     }
 
@@ -122,11 +102,12 @@ public class Arm {
 }
 
     public void clawRotate(double power) {
-        clawRotator.setPower(power);
+        // TODO: Use the actual motor
+        motors.clawRotator.setPower(power);
     }
 
     public void armRotate(double power) {
-        leftRotator.setPower(power);
-        rightRotator.setPower(power);
+        motors.leftRotator.setPower(power);
+        motors.rightRotator.setPower(power);
     }
 }

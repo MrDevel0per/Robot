@@ -1,76 +1,77 @@
 package org.firstinspires.ftc.teamcode.robotModel;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
+/**
+ * This class represents a chassis of a robot that does not use encoders.
+ */
 public class NoEncoderChassis {
-    private Telemetry telemetry;
-    private DcMotor leftFront;
-    private DcMotor rightFront;
-    private DcMotor leftRear;
-    private DcMotor rightRear;
+    private final Motors motors;
 
-    private HardwareMap hardwareMap;
-
-    public NoEncoderChassis(HardwareMap hardwareMap, Telemetry telemetry) {
-        this.telemetry = telemetry;
-        leftFront = hardwareMap.get(DcMotor.class,"left_front");
-        leftFront.setDirection(DcMotorEx.Direction.FORWARD);
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront = hardwareMap.get(DcMotor.class,"right_front");
-        rightFront.setDirection(DcMotorEx.Direction.REVERSE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftRear = hardwareMap.get(DcMotor.class,"left_rear");
-        leftRear.setDirection(DcMotorEx.Direction.FORWARD);
-        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightRear = hardwareMap.get(DcMotor.class,"right_rear");
-        rightRear.setDirection(DcMotorEx.Direction.REVERSE);
-        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    /**
+     * Constructor for the NoEncoderChassis class.
+     *
+     * @param hardwareMap The hardware map of the robot.
+     */
+    public NoEncoderChassis(HardwareMap hardwareMap) {
+        motors = new Motors(hardwareMap);
     }
 
-    public void driveStraight(double power) {
-        leftFront.setPower(power);
-        rightFront.setPower(power);
-        leftRear.setPower(power);
-        rightRear.setPower(power);
+    /**
+     * Sets the power for each of the drive motors.
+     *
+     * @param leftFrontPower  The power for the left front motor.
+     * @param rightFrontPower The power for the right front motor.
+     * @param leftRearPower   The power for the left rear motor.
+     * @param rightRearPower  The power for the right rear motor.
+     */
+    public void setDriveMotorPowers(double leftFrontPower, double rightFrontPower, double leftRearPower, double rightRearPower) {
+        motors.leftFrontChassis.setPower(leftFrontPower);
+        motors.rightFrontChassis.setPower(rightFrontPower);
+        motors.leftRearChassis.setPower(leftRearPower);
+        motors.rightRearChassis.setPower(rightRearPower);
     }
 
-    public void turn(double power) {
-        leftFront.setPower(power);
-        rightFront.setPower(-power);
-        leftRear.setPower(power);
-        rightRear.setPower(-power);
+    /**
+     * Handles the driving of the robot based on the input from the gamepad.
+     *
+     * @param gamepad  The gamepad that controls the robot.
+     * @param maxPower The maximum power that can be applied to the motors.
+     */
+    public void handleDriving(Gamepad gamepad, double maxPower) {
+        if (gamepad.left_stick_y == 0 && gamepad.right_stick_x == 0 && gamepad.left_stick_x == 0) {
+            stop();
+        } else {
+            double drive = gamepad.left_stick_y;
+            double turn = gamepad.right_stick_x;
+            double strafe = gamepad.left_stick_x;
+            double leftFrontPower = Range.clip(drive - turn - strafe, -maxPower, maxPower);
+            double rightFrontPower = Range.clip(drive + turn + strafe, -maxPower, maxPower);
+            double leftBackPower = Range.clip(drive - turn + strafe, -maxPower, maxPower);
+            double rightBackPower = Range.clip(drive + turn - strafe, -maxPower, maxPower);
+            setDriveMotorPowers(leftFrontPower, rightFrontPower, leftBackPower, rightBackPower);
+        }
     }
 
-    public void strafeLeft(double power) {
-        leftFront.setPower(-power);
-        rightFront.setPower(power);
-        leftRear.setPower(power);
-        rightRear.setPower(-power);
+    /**
+     * Handles the driving of the robot based on the input from the gamepad.
+     * This method uses a default max power of 0.25.
+     *
+     * @param gamepad The gamepad that controls the robot.
+     */
+    public void handleDriving(Gamepad gamepad) {
+        handleDriving(gamepad, 0.25);
     }
 
-    public void strafeRight(double power) {
-        leftFront.setPower(power);
-        rightFront.setPower(-power);
-        leftRear.setPower(-power);
-        rightRear.setPower(power);
-    }
-
+    /**
+     * Stops the robot by setting all motor powers to 0.
+     */
     public void stop() {
-        leftFront.setPower(0);
-        rightFront.setPower(0);
-        leftRear.setPower(0);
-        rightRear.setPower(0);
-    }
-
-    public void setMotorPowers(double leftFrontPower, double rightFrontPower, double leftRearPower, double rightRearPower) {
-        leftFront.setPower(leftFrontPower);
-        rightFront.setPower(rightFrontPower);
-        leftRear.setPower(leftRearPower);
-        rightRear.setPower(rightRearPower);
+        motors.leftFrontChassis.setPower(0);
+        motors.rightFrontChassis.setPower(0);
+        motors.leftRearChassis.setPower(0);
+        motors.rightRearChassis.setPower(0);
     }
 }

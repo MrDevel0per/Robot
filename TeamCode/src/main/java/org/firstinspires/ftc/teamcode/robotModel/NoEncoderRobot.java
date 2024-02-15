@@ -1,42 +1,20 @@
 package org.firstinspires.ftc.teamcode.robotModel;
 
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class NoEncoderRobot {
     public NoEncoderChassis chassis;
-    private Telemetry telemetry;
-    private Arm arm;
-    private Launcher launcher;
+    private final Arm arm;
 
-    private HardwareMap hardwareMap;
 
-    public NoEncoderRobot(HardwareMap hardwareMap, Telemetry telemetry) {
-        this.chassis = new NoEncoderChassis(hardwareMap, telemetry);
-        this.telemetry=telemetry;
+    public NoEncoderRobot(HardwareMap hardwareMap) {
+        this.chassis = new NoEncoderChassis(hardwareMap);
         this.arm = new Arm(hardwareMap);
-        this.launcher = launcher;
     }
 
-    public void driveStraight(double power) {
-        chassis.driveStraight(power);
-    }
-
-    public void turn(double power) {
-        chassis.turn(power);
-    }
-
-    public void strafeLeft(double power) {
-        chassis.strafeLeft(power);
-    }
-
-    public void strafeRight(double power) {
-        chassis.strafeRight(power);
-    }
-
-    public void setMotorPowers(double leftFrontPower, double rightFrontPower, double leftRearPower, double rightRearPower) {
-        chassis.setMotorPowers(leftFrontPower, rightFrontPower, leftRearPower, rightRearPower);
+    public void handleDriving(Gamepad gamepad) {
+        chassis.handleDriving(gamepad);
     }
 
     public void stop() {
@@ -47,38 +25,31 @@ public class NoEncoderRobot {
         arm.armRotate(power);
     }
 
-    /*public void rotateArmButton(){
-        Arm.Position position = null;
-        arm.rotateArm(position);
-    }*/
-    public void rotateArmButton1(){
+    public void rotateArmButton1() {
         arm.rotateArm(Arm.Position.GROUND);
     }
-    public void rotateArmButton2(){
+
+    public void rotateArmButton2() {
         arm.rotateArm(Arm.Position.TRANSPORT);
     }
-    public void rotateArmButton3(){
+
+    public void rotateArmButton3() {
         arm.rotateArm(Arm.Position.FIRST_LINE);
     }
-    public void rotateArmButton4(){
+
+    public void rotateArmButton4() {
         arm.rotateArm(Arm.Position.SECOND_LINE);
     }
 
-    public void grip(){arm.grip();}
+    public void grip() {
+        arm.grip();
+    }
 
-    public void unGrip(){arm.unGrip();}
+    public void unGrip() {
+        arm.unGrip();
+    }
 
-    public void clawRotator(double power){arm.clawRotate(power);}
-
-    //public void forward(){arm.clawForward();}
-    //public void backwards(){arm.clawBackwards();}
-
-    /*public void upDownArm(double power) {
-        arm.upDown(power);
-    }*/
-
-
-    //public void shovelArm(double power) {
-    //    arm.shovel(power);
-    //}
+    public void clawRotator(double power) {
+        arm.clawRotate(power);
+    }
 }

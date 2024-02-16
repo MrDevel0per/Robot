@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.util;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 public class OutputUtils {
 
     /**
@@ -12,13 +10,13 @@ public class OutputUtils {
      * @param value   The actual value to be outputted.
      */
     public static void print(String caption, Object value) {
-        telemetry.addData(caption, value);
-        telemetry.update();
+//        telemetry.addData(caption, value);
+//        telemetry.update();
     }
 
     public static void soloPrint(Object value) {
-        telemetry.addData("", value);
-        telemetry.update();
+//        telemetry.addData("", value);
+//        telemetry.update();
     }
 
 

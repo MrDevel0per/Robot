@@ -14,10 +14,11 @@ import org.firstinspires.ftc.teamcode.robotModel.NoEncoderRobot;
 public class NoEncoderTeleOp extends LinearOpMode {
     private final ElapsedTime runtime = new ElapsedTime();
     private NoEncoderRobot robot;
+    Boolean alreadyRotated = false;
 
     @Override
     public void runOpMode() {
-        this.robot = new NoEncoderRobot(hardwareMap);
+        this.robot = new NoEncoderRobot(hardwareMap, telemetry);
 
         waitForStart();
         runtime.reset();
@@ -27,6 +28,8 @@ public class NoEncoderTeleOp extends LinearOpMode {
             handleRobotMovement();
             handleArmMovement();
         }
+        robot.stop();
+
     }
 
     /**
@@ -42,27 +45,25 @@ public class NoEncoderTeleOp extends LinearOpMode {
     void handleArmMovement() {
         // Use the y value of the right stick to determine rotation
         double armRotation = gamepad2.right_stick_y;
-        double armRotationPower = Range.clip(armRotation, -1.0, 1.0);
-        robot.rotateArmPlayer(armRotationPower);
+        // Use function 1 - e^(1/1-t)
+//        armRotation = 1 - Math.pow(Math.E, 1 / (1 - armRotation));
+        double MAX_UP_POWER = 0.32;
+        double MAX_DOWN_POWER = 0.32 * -1;
+        double armRotationPower = Range.clip(armRotation, MAX_DOWN_POWER, MAX_UP_POWER);
+        if (armRotationPower != 0) {
+            telemetry.addData("Power: ", armRotationPower);
+            telemetry.update();
+            if (!alreadyRotated) {
+                alreadyRotated = true;
+            }
+            robot.rotateArmPlayer(armRotationPower);
+        } else {
+            if (alreadyRotated) {
+                robot.rotateArmPlayer(0);
+            }
+        }
 
         // Have set positions where the arm holds its location
-        boolean armGround = gamepad2.x;
-        boolean armTransport = gamepad2.y;
-        boolean armDrop1stLine = gamepad2.a;
-        boolean armDrop2ndLine = gamepad2.b;
-
-        if (armGround) {
-            robot.rotateArmButton1();
-        }
-        if (armTransport) {
-            robot.rotateArmButton2();
-        }
-        if (armDrop1stLine) {
-            robot.rotateArmButton3();
-        }
-        if (armDrop2ndLine) {
-            robot.rotateArmButton4();
-        }
 
         // Control claw angle with the y value of the left stick
         double clawRotation = gamepad2.left_stick_y;

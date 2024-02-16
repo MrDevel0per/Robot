@@ -3,14 +3,17 @@ package org.firstinspires.ftc.teamcode.robotModel;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class NoEncoderRobot {
     public NoEncoderChassis chassis;
     private final Arm arm;
+    private Telemetry telemetry;
 
 
-    public NoEncoderRobot(HardwareMap hardwareMap) {
+    public NoEncoderRobot(HardwareMap hardwareMap, Telemetry telemetry) {
         this.chassis = new NoEncoderChassis(hardwareMap);
-        this.arm = new Arm(hardwareMap);
+        this.arm = new Arm(hardwareMap, telemetry);
     }
 
     public void handleDriving(Gamepad gamepad) {
@@ -19,27 +22,14 @@ public class NoEncoderRobot {
 
     public void stop() {
         chassis.stop();
+        arm.stop();
     }
 
     public void rotateArmPlayer(double power) {
         arm.armRotate(power);
     }
 
-    public void rotateArmButton1() {
-        arm.rotateArm(Arm.Position.GROUND);
-    }
 
-    public void rotateArmButton2() {
-        arm.rotateArm(Arm.Position.TRANSPORT);
-    }
-
-    public void rotateArmButton3() {
-        arm.rotateArm(Arm.Position.FIRST_LINE);
-    }
-
-    public void rotateArmButton4() {
-        arm.rotateArm(Arm.Position.SECOND_LINE);
-    }
 
     public void grip() {
         arm.grip();

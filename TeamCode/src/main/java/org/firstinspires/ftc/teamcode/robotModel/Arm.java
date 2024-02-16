@@ -2,14 +2,31 @@ package org.firstinspires.ftc.teamcode.robotModel;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Arm {
     private final Motors motors;
     private final Servos servos;
-    public boolean isHolding = true;
+    private final Lock lock = new ReentrantLock();
 
-    public Arm(HardwareMap hardwareMap) {
+    private boolean isScheduled = false;
+
+    public boolean isHolding = true;
+    private volatile boolean shouldStop = false;
+
+    private ScheduledExecutorService execService;
+    private Telemetry telemetry;
+
+    public Arm(HardwareMap hardwareMap, Telemetry telemetry) {
         this.motors = new Motors(hardwareMap);
         this.servos = new Servos(hardwareMap);
+        this.telemetry = telemetry;
     }
 
     public void grip() {
@@ -26,6 +43,11 @@ public class Arm {
         return (motors.leftRotator.getCurrentPosition() + motors.rightRotator.getCurrentPosition()) / 2;
     }
 
+    public void stop() {
+        motors.leftRotator.setPower(0);
+        motors.rightRotator.setPower(0);
+    }
+
     public enum Position {
         GROUND(10),
         FIRST_LINE(20),
@@ -39,34 +61,13 @@ public class Arm {
         }
     }
 
-    public void rotateArm(Position position) {
-        isHolding = false;
-        int currentPosition = getArmRotation();
-        int targetPosition = position.DEGREES_OF_360;
-        int difference = targetPosition - currentPosition;
-        int direction = 1;
-        if (Math.abs(difference) > 180) {
-            direction = -1;
-            difference = (360 - currentPosition) + targetPosition;
-        }
-        while (Math.abs(difference) > 60) {
-            int power = (int) Math.signum(difference) * (Math.min(Math.abs(difference), 1));
-            motors.rightRotator.setPower(power * direction * 0.3);
-            motors.leftRotator.setPower(power * direction * 0.3);
-            difference = getArmRotation() - targetPosition;
-        }
-        motors.rightRotator.setPower(0);
-        motors.leftRotator.setPower(0);
-        isHolding = true;
-        hold();
-    }
-
     private void rotateArmToDesiredPos(int desiredPosition) {
         double TICKS_PER_360_DEGREES = 537.7;
-        int allowedError = 1;
+        int allowedError = (int) ((5 / 360) * (TICKS_PER_360_DEGREES));
         int currentMotorPosition = this.getArmRotation();
         int difference = desiredPosition - currentMotorPosition;
-        double power = 0.25;
+        // Found as good holding power
+        double power = 0.2;
         if (difference > allowedError) {
             motors.rightRotator.setPower(power);
             motors.leftRotator.setPower(power);
@@ -81,33 +82,48 @@ public class Arm {
         }
     }
 
-  public void hold() {
-    new Thread(() -> {
-        long CHECK_EVERY_MILLISECONDS = 100;
-        int startingMotorPosition = getArmRotation();
-        long currentTime = System.nanoTime();
-        while (isHolding) {
-            int currentMotorPosition = getArmRotation();
-            if (Math.abs(currentMotorPosition - startingMotorPosition) > 1) {
-                rotateArmToDesiredPos(startingMotorPosition);
-            }
-            while (System.nanoTime() - currentTime < CHECK_EVERY_MILLISECONDS) {
-                if (!isHolding) {
-                    return;
-                }
-            }
-            currentTime = System.nanoTime();
+    public void _hold() {
+        if (!isHolding || shouldStop) {
+            execService.shutdown();
+            isScheduled = false;
+            return;
         }
-    }).start();
-}
+        telemetry.addData("DOING IT!!", "Working now");
+        telemetry.update();
+        int startingMotorPosition = getArmRotation();
+        int currentMotorPosition = getArmRotation();
+        rotateArmToDesiredPos(currentMotorPosition);
+
+    }
+
+    public void hold() {
+        lock.lock();
+        try {
+            if (this.execService == null || this.execService.isShutdown()) {
+                this.execService = Executors.newSingleThreadScheduledExecutor();
+            }
+            _hold();
+            if (!isScheduled) {
+                execService.scheduleAtFixedRate(this::_hold, 0, 500, TimeUnit.MILLISECONDS);
+                isScheduled = true;
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
 
     public void clawRotate(double power) {
-        // TODO: Use the actual motor
         motors.clawRotator.setPower(power);
     }
 
     public void armRotate(double power) {
+
         motors.leftRotator.setPower(power);
         motors.rightRotator.setPower(power);
+        if (power == 0) {
+            motors.leftRotator.setPower(-0.15);
+            motors.rightRotator.setPower(-0.15);
+        }
     }
-}
+    }

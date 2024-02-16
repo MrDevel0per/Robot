@@ -41,7 +41,7 @@ public class NoEncoderTeleOp extends LinearOpMode {
      */
     void handleArmMovement() {
         // Use the y value of the right stick to determine rotation
-        double armRotation = gamepad1.right_stick_y;
+        double armRotation = gamepad2.right_stick_y;
         double armRotationPower = Range.clip(armRotation, -1.0, 1.0);
         robot.rotateArmPlayer(armRotationPower);
 

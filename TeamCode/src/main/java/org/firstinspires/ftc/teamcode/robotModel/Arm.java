@@ -119,12 +119,20 @@ public class Arm {
     }
 
 
-    public void droneLaunch(){
+    public void droneLaunch() {
         servos.droneLauncher.setPosition(0);
     }
-    public void hang(){
-        motors.hangMotor.setPower(1);
+
+    public void hang(boolean y, boolean a) {
+        if (y) {
+            motors.hangMotor.setPower(1);
+        } else if (a) {
+            motors.hangMotor.setPower(-1);
+        } else {
+            motors.hangMotor.setPower(0);
+        }
     }
+
     public void armRotate(double power) {
 
         motors.leftRotator.setPower(power);
@@ -135,3 +143,4 @@ public class Arm {
         }
     }
     }
+// Y up and A down

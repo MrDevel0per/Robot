@@ -30,13 +30,13 @@ public class NoEncoderRobot {
     }
 
 
-    public void droneLaunch(){
+    public void droneLaunch() {
         arm.droneLaunch();
     }
 
 
-    public void hang(){
-        arm.hang();
+    public void hang(boolean y, boolean x) {
+        arm.hang(y, x);
     }
 
     public void grip() {

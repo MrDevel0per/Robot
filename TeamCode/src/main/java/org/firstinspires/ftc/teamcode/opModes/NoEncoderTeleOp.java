@@ -76,10 +76,10 @@ public class NoEncoderTeleOp extends LinearOpMode {
             robot.unGrip();
         }
 
-        boolean hang = gamepad2.y;
-        if (hang) {
-            robot.hang();
-        }
+        boolean hang = gamepad1.y;
+        boolean hangDown = gamepad1.x;
+
+        robot.hang(hang, hangDown);
     }
 
 }

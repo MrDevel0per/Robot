@@ -70,9 +70,14 @@ public class NoEncoderTeleOp extends LinearOpMode {
         double clawRotationPower = Range.clip(clawRotation, -1.0, 1.0);
         robot.clawRotator(clawRotationPower);
 
+        boolean droneLaunch = gamepad2.a;
+        if (droneLaunch){
+            robot.droneLaunch();
+        }
+
         // Servos open/close controlled by X and B
-        boolean grip = gamepad2.left_bumper;
-        boolean unGrip = gamepad2.right_bumper;
+        boolean grip = gamepad2.x;
+        boolean unGrip = gamepad2.b;
 
         if (grip) {
             robot.grip();

@@ -19,7 +19,8 @@ public class Motors {
     // MARK: Arm Motors
     public DcMotor leftRotator;
     public DcMotor rightRotator;
-    public DcMotor clawRotator;
+    public DcMotor clawRotatorRight;
+    public DcMotor clawRotatorLeft;
 
     public Motors(@NonNull HardwareMap hardwareMap) {
         this.leftFrontChassis = hardwareMap.get(DcMotor.class, "left_front");
@@ -28,7 +29,6 @@ public class Motors {
         this.rightRearChassis = hardwareMap.get(DcMotor.class, "right_rear");
         this.leftRotator = hardwareMap.get(DcMotor.class, "left_rotator");
         this.rightRotator = hardwareMap.get(DcMotor.class, "right_rotator");
-        this.clawRotator = hardwareMap.get(DcMotor.class, "claw_rotator");
         leftFrontChassis = hardwareMap.get(DcMotor.class, "left_front");
         leftFrontChassis.setDirection(DcMotorSimple.Direction.FORWARD);
         leftFrontChassis.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -45,7 +45,5 @@ public class Motors {
         leftRotator.setDirection(DcMotor.Direction.FORWARD);
         this.rightRotator = hardwareMap.get(DcMotor.class, "right_rotator");
         rightRotator.setDirection(DcMotor.Direction.REVERSE);
-        this.clawRotator = hardwareMap.get(DcMotor.class, "claw_rotator");
-        clawRotator.setDirection(CRServo.Direction.FORWARD);
     }
 }

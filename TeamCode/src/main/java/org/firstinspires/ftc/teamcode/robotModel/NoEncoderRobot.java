@@ -30,6 +30,9 @@ public class NoEncoderRobot {
     }
 
 
+    public void droneLaunch(){
+        arm.droneLaunch();
+    }
 
     public void grip() {
         arm.grip();

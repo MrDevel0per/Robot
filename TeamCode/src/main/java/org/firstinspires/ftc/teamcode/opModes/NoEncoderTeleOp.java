@@ -48,22 +48,10 @@ public class NoEncoderTeleOp extends LinearOpMode {
         double armRotation = gamepad2.right_stick_y;
         // Use function 1 - e^(1/1-t)
 //        armRotation = 1 - Math.pow(Math.E, 1 / (1 - armRotation));
-        double MAX_UP_POWER = 0.32;
-        double MAX_DOWN_POWER = 0.32 * -1;
+        double MAX_UP_POWER = 0.50;
+        double MAX_DOWN_POWER = 0.50 * -1;
         double armRotationPower = Range.clip(armRotation, -0.4, 0.4);
         robot.rotateArmPlayer(armRotationPower);
-        /*if (armRotationPower != 0) {
-            telemetry.addData("Power: ", armRotationPower);
-            telemetry.update();
-            if (!alreadyRotated) {
-                alreadyRotated = true;
-            }
-            robot.rotateArmPlayer(armRotationPower);
-        } else {
-            if (alreadyRotated) {
-                robot.rotateArmPlayer(0);
-            }
-        }*/
 
         // Have set positions where the arm holds its location
 

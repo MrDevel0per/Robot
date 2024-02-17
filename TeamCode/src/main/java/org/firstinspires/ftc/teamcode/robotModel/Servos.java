@@ -10,8 +10,8 @@ public class  Servos {
     public Servo leftClawServo;
     public Servo rightClawServo;
 
-    public Servo clawRotatorRight;
-    public Servo clawRotatorLeft;
+    public CRServo clawRotatorRight;
+    public CRServo clawRotatorLeft;
 
     public Servo droneLauncher;
 

@@ -48,8 +48,8 @@ public class NoEncoderTeleOp extends LinearOpMode {
         double armRotation = gamepad2.right_stick_y;
         // Use function 1 - e^(1/1-t)
 //        armRotation = 1 - Math.pow(Math.E, 1 / (1 - armRotation));
-        double MAX_UP_POWER = 0.32;
-        double MAX_DOWN_POWER = 0.32 * -1;
+        double MAX_UP_POWER = 0.45;
+        double MAX_DOWN_POWER = 0.45 * -1;
         double armRotationPower = Range.clip(armRotation, MAX_DOWN_POWER, MAX_UP_POWER);
         if (armRotationPower != 0) {
             telemetry.addData("Power: ", armRotationPower);

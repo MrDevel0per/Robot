@@ -6,12 +6,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.checkerframework.checker.units.qual.C;
 
-public class Servos {
+public class  Servos {
     public Servo leftClawServo;
     public Servo rightClawServo;
 
-    public CRServo clawRotatorRight;
-    public CRServo clawRotatorLeft;
+    public Servo clawRotatorRight;
+    public Servo clawRotatorLeft;
 
     public Servo droneLauncher;
 

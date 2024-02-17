@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class NoEncoderRobot {
     public NoEncoderChassis chassis;
-    private final Arm arm;
+    public Arm arm;
     private Telemetry telemetry;
 
 
@@ -34,8 +34,9 @@ public class NoEncoderRobot {
         arm.droneLaunch();
     }
 
-    public void start(){
-        arm.start();
+
+    public void hang(){
+        arm.hang();
     }
 
     public void grip() {

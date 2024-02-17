@@ -19,6 +19,7 @@ public class Motors {
     // MARK: Arm Motors
     public DcMotor leftRotator;
     public DcMotor rightRotator;
+    public DcMotor hangMotor;
     public DcMotor clawRotatorRight;
     public DcMotor clawRotatorLeft;
 
@@ -45,5 +46,7 @@ public class Motors {
         leftRotator.setDirection(DcMotor.Direction.FORWARD);
         this.rightRotator = hardwareMap.get(DcMotor.class, "right_rotator");
         rightRotator.setDirection(DcMotor.Direction.REVERSE);
+        this.hangMotor = hardwareMap.get(DcMotor.class, "hang_motor");
+        hangMotor.setDirection(DcMotor.Direction.REVERSE);
     }
 }

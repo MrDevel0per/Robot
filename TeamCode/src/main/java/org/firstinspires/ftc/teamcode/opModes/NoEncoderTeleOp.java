@@ -24,10 +24,10 @@ public class NoEncoderTeleOp extends LinearOpMode {
         runtime.reset();
 
         // Run until the end of the match (driver presses STOP)
+
         while (opModeIsActive()) {
             handleRobotMovement();
             handleArmMovement();
-            robot.start();
         }
         robot.stop();
 
@@ -50,8 +50,9 @@ public class NoEncoderTeleOp extends LinearOpMode {
 //        armRotation = 1 - Math.pow(Math.E, 1 / (1 - armRotation));
         double MAX_UP_POWER = 0.32;
         double MAX_DOWN_POWER = 0.32 * -1;
-        double armRotationPower = Range.clip(armRotation, MAX_DOWN_POWER, MAX_UP_POWER);
-        if (armRotationPower != 0) {
+        double armRotationPower = Range.clip(armRotation, -0.4, 0.4);
+        robot.rotateArmPlayer(armRotationPower);
+        /*if (armRotationPower != 0) {
             telemetry.addData("Power: ", armRotationPower);
             telemetry.update();
             if (!alreadyRotated) {
@@ -62,7 +63,7 @@ public class NoEncoderTeleOp extends LinearOpMode {
             if (alreadyRotated) {
                 robot.rotateArmPlayer(0);
             }
-        }
+        }*/
 
         // Have set positions where the arm holds its location
 
@@ -86,5 +87,11 @@ public class NoEncoderTeleOp extends LinearOpMode {
         if (unGrip) {
             robot.unGrip();
         }
+
+        boolean hang = gamepad2.y;
+        if (hang) {
+            robot.hang();
+        }
     }
+
 }

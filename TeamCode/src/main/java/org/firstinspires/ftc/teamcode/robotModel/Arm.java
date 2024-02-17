@@ -120,7 +120,7 @@ public class Arm {
 
 
     public void droneLaunch(){
-        servos.droneLauncher.setPosition(1);
+        servos.droneLauncher.setPosition(0);
     }
     public void hang(){
         motors.hangMotor.setPower(1);

@@ -27,6 +27,7 @@ public class NoEncoderTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             handleRobotMovement();
             handleArmMovement();
+            robot.start();
         }
         robot.stop();
 

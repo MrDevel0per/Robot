@@ -118,6 +118,9 @@ public class Arm {
         servos.clawRotatorLeft.setPower(power);
     }
 
+    public void start(){
+        servos.droneLauncher.setPosition(0.5);
+    }
     public void droneLaunch(){
         servos.droneLauncher.setPosition(1);
     }

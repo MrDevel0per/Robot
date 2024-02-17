@@ -62,7 +62,7 @@ public class NoEncoderChassis {
      * @param gamepad The gamepad that controls the robot.
      */
     public void handleDriving(Gamepad gamepad) {
-        handleDriving(gamepad, 0.25);
+        handleDriving(gamepad, 0.50);
     }
 
     /**

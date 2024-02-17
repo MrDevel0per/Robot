@@ -50,7 +50,7 @@ public class NoEncoderTeleOp extends LinearOpMode {
 //        armRotation = 1 - Math.pow(Math.E, 1 / (1 - armRotation));
         double MAX_UP_POWER = 0.50;
         double MAX_DOWN_POWER = 0.50 * -1;
-        double armRotationPower = Range.clip(armRotation, -0.4, 0.4);
+        double armRotationPower = Range.clip(armRotation, MAX_DOWN_POWER, MAX_UP_POWER);
         robot.rotateArmPlayer(armRotationPower);
 
         // Have set positions where the arm holds its location

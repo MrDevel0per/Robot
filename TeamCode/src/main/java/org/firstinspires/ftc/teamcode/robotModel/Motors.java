@@ -46,7 +46,7 @@ public class Motors {
         leftRotator.setDirection(DcMotor.Direction.FORWARD);
         this.rightRotator = hardwareMap.get(DcMotor.class, "right_rotator");
         rightRotator.setDirection(DcMotor.Direction.REVERSE);
-        this.hangMotor = hardwareMap.get(DcMotor.class, "hang_motor");
-        hangMotor.setDirection(DcMotor.Direction.REVERSE);
+        this.hangMotor = hardwareMap.get(DcMotor.class, "claw_rotator");
+        hangMotor.setDirection(DcMotor.Direction.FORWARD);
     }
 }

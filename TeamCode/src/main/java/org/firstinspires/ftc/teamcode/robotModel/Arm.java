@@ -48,10 +48,6 @@ public class Arm {
         motors.rightRotator.setPower(0);
     }
 
-    public void clawRotate(double power) {
-        servos.clawRotator
-    }
-
     public enum Position {
         GROUND(10),
         FIRST_LINE(20),
@@ -65,7 +61,7 @@ public class Arm {
         }
     }
 
-     void rotateArmToDesiredPos(int desiredPosition) {
+    private void rotateArmToDesiredPos(int desiredPosition) {
         double TICKS_PER_360_DEGREES = 537.7;
         int allowedError = (int) ((5 / 360) * (TICKS_PER_360_DEGREES));
         int currentMotorPosition = this.getArmRotation();
@@ -117,11 +113,17 @@ public class Arm {
     }
 
 
-    public void start(){
-        servos.droneLauncher.setPosition(0.5);
+    public void clawRotate(double power) {
+        servos.clawRotatorRight.setPower(power);
+        servos.clawRotatorLeft.setPower(power);
     }
+
+
     public void droneLaunch(){
-        servos.droneLauncher.setPosition(1);
+        servos.droneLauncher.setPosition(0);
+    }
+    public void hang(){
+        motors.hangMotor.setPower(1);
     }
     public void armRotate(double power) {
 

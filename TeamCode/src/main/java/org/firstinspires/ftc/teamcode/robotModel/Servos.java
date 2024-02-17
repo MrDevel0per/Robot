@@ -25,7 +25,7 @@ public class  Servos {
         this.clawRotatorLeft = hardwareMap.get(CRServo.class, "claw_rotator_left");
         clawRotatorLeft.setDirection(CRServo.Direction.REVERSE);
         this.droneLauncher = hardwareMap.get(Servo.class, "droneLauncher");
-        droneLauncher.setDirection(Servo.Direction.FORWARD);
+        droneLauncher.setDirection(Servo.Direction.REVERSE);
     }
 
 }

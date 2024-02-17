@@ -130,8 +130,8 @@ public class Arm {
         motors.leftRotator.setPower(power);
         motors.rightRotator.setPower(power);
         if (power == 0) {
-            motors.leftRotator.setPower(-0.15);
-            motors.rightRotator.setPower(-0.15);
+            motors.leftRotator.setPower(-0.4);
+            motors.rightRotator.setPower(-0.4);
         }
     }
     }
